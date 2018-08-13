@@ -34,19 +34,29 @@ node cmdtools paramsFile dataFile configFile
 
 {
   "tabDelimiter": "\t",
+
   "langs": ["en-US", "it", "pt", "ca", "fr", "de", "es"],
+
   "skipShortDefs": false,
+
   "skipFullDefs": false,
 
   "downloadMorph": true,
+
   "downloadShortDef": true,
+
   "downloadFullDef": true,
+
   "downloadTranslations": true,
 
   "downloadFailedMorph": true,
+
   "downloadFailedShortDef": true,
+
   "downloadFailedFullDef": true,
+
   "downloadFailedTranslations": true,
+  
   "downloadFailedAnything": true
 }
 
