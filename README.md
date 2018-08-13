@@ -17,8 +17,9 @@ npm install
 ```
 
 ### Examples:
-
+```
 node cmdtools paramsFile dataFile configFile
+```
 
 ## Parameters:
 
