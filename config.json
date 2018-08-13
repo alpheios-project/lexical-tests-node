@@ -1,0 +1,15 @@
+{
+	"languages" : {
+		"lat": "latin",
+		"grc": "greek"
+	},
+	"dictionaries" : {
+		"ml":  { "url": "https://github.com/alpheios-project/ml", "name": "Middle Liddell", "languageCode": "grc" },
+      	"lsj": { "url": "https://github.com/alpheios-project/lsj", "name": "Liddell, Scott, Jones", "languageCode": "grc" },
+      	"aut": { "url": "https://github.com/alpheios-project/aut", "name": "Autenrieth Homeric Lexicon", "languageCode": "grc" },
+      	"dod": { "url": "https://github.com/alpheios-project/dod", "name": "Dodson", "languageCode": "grc" },
+      	"as":  { "url": "https://github.com/alpheios-project/as", "name": "Abbott-Smith", "languageCode": "grc" },
+
+      	"ls":  { "url": "https://github.com/alpheios-project/ls", "name": "Lewis & Short", "languageCode": "lat" }
+	}
+}

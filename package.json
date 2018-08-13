@@ -1,0 +1,97 @@
+{
+  "name": "alpheios-lexical-tests-node",
+  "version": "0.0.1",
+  "description": "Lexical tests library for an Alpheios project - command line version",
+  "main": "dist/alpheios-lexical-tests-node.min.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/alpheios-project/lexical-tests.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "git://github.com/alpheios-project/lexical-tests/issues"
+  },
+  "homepage": "git://github.com/alpheios-project/lexical-tests#readme",
+  "devDependencies": {
+    "acorn": "^2.7.0",
+    "alpheios-data-models": "github:alpheios-project/data-models#for-cmdtools",
+    "alpheios-lemma-client": "github:alpheios-project/lemma-client",
+    "alpheios-lexicon-client": "github:alpheios-project/lexicon-client",
+    "alpheios-morph-client": "github:alpheios-project/morph-client#for-cmdtools",
+    "autoprefixer": "^8.6.4",
+    "axios": "*",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^8.2.5",
+    "babel-jest": "^23.2.0",
+    "babel-loader": "^7.1.4",
+    "babel-plugin-dynamic-import-node": "^2.0.0",
+    "babel-plugin-transform-es2015-modules-commonjs": "^6.26.2",
+    "babel-plugin-transform-runtime": "^6.22.0",
+    "babel-polyfill": "*",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-es2015": "*",
+    "babel-preset-stage-0": "*",
+    "babel-register": "^6.22.0",
+    "blob": "*",
+    "bytes": "^3.0.0",
+    "chalk": "^2.4.1",
+    "coveralls": "^3.0.2",
+    "dom-anchor-text-quote": "*",
+    "element-closest": "^2.0.2",
+    "eslint": "^5.3.0",
+    "eslint-plugin-import": "^2.13.0",
+    "espree": "^2.2.4",
+    "file-loader": "^1.1.11",
+    "flush-promises": "^1.0.0",
+    "fs": "0.0.1-security",
+    "mkdirp": "^0.5.1",
+    "papaparse": "*",
+    "path": "^0.12.7",
+    "semver": "^5.5.0",
+    "shelljs": "^0.8.2",
+    "sinon": "^6.1.5",
+    "source-map-loader": "^0.2.3",
+    "standard": "^11.0.1",
+    "style-loader": "^0.21.0",
+    "url-loader": "^1.0.1",
+    "wrap-range-text": "*",
+    "zip-folder": "^1.0.0"
+  },
+  "peerDependencies": {
+    "alpheios-data-models": "github:alpheios-project/data-models",
+    "dom-anchor-text-quote": "4.0.2",
+    "intl-messageformat": "2.x.x",
+    "uuid": "3.x.x",
+    "wrap-range-text": ""
+  },
+  "jest": {
+    "verbose": true,
+    "moduleNameMapper": {
+      "^@[/](.+)": "<rootDir>/src/$1"
+    },
+    "transform": {
+      "^.+\\.htmlf$": "html-loader-jest",
+      "^.+\\.jsx?$": "babel-jest",
+      ".*\\.(vue)$": "<rootDir>/node_modules/jest-vue-preprocessor",
+      ".*\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/fileTransform.js"
+    }
+  },
+  "eslintConfig": {
+    "env": {
+      "browser": true,
+      "node": true,
+      "jest": true
+    },
+    "parserOptions": {
+      "ecmaVersion": 2017,
+      "sourceType": "module"
+    }
+  },
+  "standard": {
+    "ignore": [
+      "**/dist",
+      "**/cmdtool"
+    ]
+  }
+}
