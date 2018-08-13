@@ -16,7 +16,7 @@ Alpheios Lexical Tests - command line versiom
 npm install
 ```
 
-Examples:
+### Examples:
 
 node cmdtools paramsFile dataFile configFile
 
