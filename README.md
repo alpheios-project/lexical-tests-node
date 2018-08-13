@@ -20,16 +20,16 @@ npm install
 
 node cmdtools paramsFile dataFile configFile
 
-Parameters:
+## Parameters:
 
-paramsFile - optional - json file (default = params.json)
+**paramsFile** - *optional* - json file (default = **params.json**)
 
-dataFile - optional - json file (default = data.json)
+**dataFile** - *optional* - json file (default = **data.json**)
 
-configFile - optional - json file (default = config.json)
+**configFile** - *optional* - json file (default = **config.json**)
 
 
-paramsFile:
+## paramsFile:
 
 {
   "tabDelimiter": "\t",
