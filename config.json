@@ -2,8 +2,8 @@
 	"languages" : {
 		"lat": "latin",
 		"grc": "greek",
-        "per": "persian",
-        "ara": "arabic"
+    "per": "persian",
+    "ara": "arabic"
 	},
 	"dictionaries" : {
 		"ml":  { "url": "https://github.com/alpheios-project/ml", "name": "Middle Liddell", "languageCode": "grc" },

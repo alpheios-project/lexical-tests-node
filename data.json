@@ -1,8 +1,8 @@
 [
 	{
-		"targetWord": "زین",
-        "languageCode": "per",
-        "lexiconShortOpts": { "codes": [] },
+		"targetWord": "cepit",
+        "languageCode": "lat",
+        "lexiconShortOpts": { "codes": ["ls"] },
         "lexiconFullOpts": { "codes": [] }
 	}
 ]

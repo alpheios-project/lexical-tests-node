@@ -16,7 +16,7 @@
   "devDependencies": {
     "acorn": "^2.7.0",
     "alpheios-data-models": "github:alpheios-project/data-models#for-cmdtools",
-    "alpheios-lemma-client": "github:alpheios-project/lemma-client",
+    "alpheios-lemma-client": "github:alpheios-project/lemma-client#for-cmdtools",
     "alpheios-lexicon-client": "github:alpheios-project/lexicon-client#for-cmdtools",
     "alpheios-morph-client": "github:alpheios-project/morph-client#for-cmdtools",
     "autoprefixer": "^8.6.4",
