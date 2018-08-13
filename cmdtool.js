@@ -4,38 +4,26 @@ require('babel-register')({
 require("babel-polyfill")
 
 const DataController = require('./lib/data-controller.js')
+const FileController = require('./lib/file-controller.js').default
 
-const fs = require('fs')
-const path = require('path')
-
-let outputFN = path.join(__dirname, 'result/test.csv')
-
-let readFile = function readFile (filePath) {
-  'use strict'
-  return fs.readFileSync(filePath, 'utf8')
-}
-
-let writeData = function writeData (data, filePath) {
-  'use strict'
-  fs.writeFileSync(filePath, data, {encoding: 'utf8'})
-}
-
-let dataFile = process.argv[2] || 'data.json'
-let configFile = process.argv[3] || 'config.json'
+let paramsFile = process.argv[2] || 'params.json'
+let dataFile = process.argv[3] || 'data.json'
+let configFile = process.argv[4] || 'config.json'
 
 if (!dataFile) {
   console.log('You should provide a filename with words for checking data')
 } else {
   try {
-    let sourceData = readFile(path.join(__dirname, dataFile))
+    let sourceData = FileController.readData(dataFile)
     console.log('1 Source data is uploaded')
 
-    let configData = readFile(path.join(__dirname, configFile))
+    let configData = FileController.readData(configFile)
     console.log('2 Config data is uploaded')
 
-    let dc = new DataController(sourceData, configData)
+    let paramsData = FileController.readData(paramsFile)
+    console.info('**********paramsData', paramsData)
+    new DataController(sourceData, configData, JSON.parse(paramsData))
 
-    // writeData('testMessage1, testMessage2', outputFN)
   } catch (err1) {
     console.error('Some error occurred', err1.stack)
   }
