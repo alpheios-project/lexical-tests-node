@@ -21,7 +21,6 @@ if (!dataFile) {
     console.log('2 Config data is uploaded')
 
     let paramsData = FileController.readData(paramsFile)
-    console.info('**********paramsData', paramsData)
     new DataController(sourceData, configData, JSON.parse(paramsData))
 
   } catch (err1) {

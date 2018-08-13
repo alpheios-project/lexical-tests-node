@@ -1,0 +1,26 @@
+[
+	{
+		"targetWord": "cepit",
+        "languageCode": "lat",
+        "lexiconShortOpts": { "codes": ["ls"] },
+        "lexiconFullOpts": { "codes": [] }
+	},
+	{
+		"targetWord": "μοῦσα",
+        "languageCode": "grc",
+        "lexiconShortOpts": { "codes": ["lsj", "aut"] },
+        "lexiconFullOpts": { "codes": ["lsj", "aut"] }
+	},
+	{
+		"targetWord": "كَنَهرٍ",
+        "languageCode": "ara",
+        "lexiconShortOpts": { "codes": [] },
+        "lexiconFullOpts": { "codes": [] }
+	},
+	{
+		"targetWord": "زین",
+        "languageCode": "per",
+        "lexiconShortOpts": { "codes": [] },
+        "lexiconFullOpts": { "codes": [] }
+	}
+]

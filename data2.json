@@ -1,0 +1,32 @@
+[
+	{
+		"targetWord": "cepit",
+        "languageCode": "lat",
+        "lexiconShortOpts": { "codes": ["ls"] },
+        "lexiconFullOpts": { "codes": ["ls"] }
+	},
+	{
+		"targetWord": "μοῦσα",
+        "languageCode": "grc",
+        "lexiconShortOpts": { "codes": ["lsj", "aut"] },
+        "lexiconFullOpts": { "codes": ["lsj", "aut"] }
+	},
+	{
+		"targetWord": "mare",
+        "languageCode": "lat",
+        "lexiconShortOpts": { "codes": ["ls"] },
+        "lexiconFullOpts": { "codes": ["ls"] }
+	},
+	{
+		"targetWord": "συνδέει",
+        "languageCode": "grc",
+        "lexiconShortOpts": { "codes": ["lsj", "aut"] },
+        "lexiconFullOpts": { "codes": ["lsj", "aut"] }
+	},
+	{
+		"targetWord": "ινώδους",
+        "languageCode": "grc",
+        "lexiconShortOpts": { "codes": ["lsj", "aut"] },
+        "lexiconFullOpts": { "codes": ["lsj", "aut"] }
+	}
+]

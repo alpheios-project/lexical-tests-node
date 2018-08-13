@@ -1,6 +1,14 @@
 {
   "tabDelimiter": "\t",
   "langs": [],
-  "skipShortDefs": true,
-  "skipFullDefs": true
+  "skipShortDefs": false,
+  "skipFullDefs": false,
+
+  "downloadMorph": false,
+  "downloadShortDef": false,
+  "downloadFullDef": false,
+
+  "downloadFailedMorph": true,
+  "downloadFailedShortDef": true,
+  "downloadFailedFullDef": true
 }
