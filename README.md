@@ -23,8 +23,11 @@ node cmdtools paramsFile dataFile configFile
 Parameters:
 
 paramsFile - optional - json file (default = params.json)
+
 dataFile - optional - json file (default = data.json)
+
 configFile - optional - json file (default = config.json)
+
 
 paramsFile:
 
