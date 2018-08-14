@@ -4,34 +4,34 @@ Alpheios Lexical Tests - command line versiom
 [![Build Status](https://travis-ci.org/alpheios-project/lexicon-client.svg?branch=master)](https://travis-ci.org/alpheios-project/lexicon-client)
 [![Coverage Status](https://coveralls.io/repos/github/alpheios-project/lexicon-client/badge.svg?branch=master)](https://coveralls.io/github/alpheios-project/lexicon-client?branch=master)
 
-## Usage
+# Usage
 
-### Prerequisites
+## Prerequisites
 
 * Node >= 7
 
-### Install Dependencies
+## Install Dependencies
 
 ```
 npm install
 ```
 
-### Examples:
-## from dist folder using node.js
+## Examples:
+### from dist folder using node.js
 ```
 node alpheios-lt-cmdtool paramsFile dataFile configFile
 ```
 
-## from packaged folder (node.js is packed inside, so you don't need to setup node.js)
-# Linux
+### from packaged folder (node.js is packed inside, so you don't need to setup node.js)
+### Linux
 ```
 alpheios-lt-cmdtool-linux paramsFile dataFile configFile
 ```
-# Mac OS
+### Mac OS
 ```
 alpheios-lt-cmdtool-macos paramsFile dataFile configFile
 ```
-# Windows
+### Windows
 ```
 alpheios-lt-cmdtool-win paramsFile dataFile configFile
 ```
