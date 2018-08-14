@@ -7,6 +7,16 @@
     "build": "node --experimental-modules ./node_modules/alpheios-node-build/dist/build.mjs all all node-app",
     "package": "npm run build && pkg . --out-path=./packaged"
   },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/alpheios-project/lexical-tests-node.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "git://github.com/alpheios-project/lexical-tests-node/issues"
+  },
+  "homepage": "git://github.com/alpheios-project/lexical-tests-node#readme",
   "devDependencies": {
     "alpheios-data-models": "github:alpheios-project/data-models#for-cmdtools",
     "alpheios-lemma-client": "github:alpheios-project/lemma-client#for-cmdtools",

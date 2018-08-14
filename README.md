@@ -17,8 +17,23 @@ npm install
 ```
 
 ### Examples:
+## from dist folder using node.js
 ```
-node cmdtools paramsFile dataFile configFile
+node alpheios-lt-cmdtool paramsFile dataFile configFile
+```
+
+## from packaged folder (node.js is packed inside, so you don't need to setup node.js)
+# Linux
+```
+alpheios-lt-cmdtool-linux paramsFile dataFile configFile
+```
+# Mac OS
+```
+alpheios-lt-cmdtool-macos paramsFile dataFile configFile
+```
+# Windows
+```
+alpheios-lt-cmdtool-win paramsFile dataFile configFile
 ```
 
 ## Parameters:
