@@ -1,5 +1,5 @@
 node_modules/**
-results/**
-coverage/**
-**/*.stackdump
-!results/.gitkeep
+dist/results/**
+packaged/results/**
+!dist/results/.gitkeep
+!packaged/results/.gitkeep

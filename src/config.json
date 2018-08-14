@@ -1,0 +1,29 @@
+{
+	"languages" : {
+		"lat": "latin",
+		"grc": "greek",
+    "per": "persian",
+    "ara": "arabic"
+	},
+	"dictionaries" : {
+		"ml":  { "url": "https://github.com/alpheios-project/ml", "name": "Middle Liddell", "languageCode": "grc" },
+      	"lsj": { "url": "https://github.com/alpheios-project/lsj", "name": "Liddell, Scott, Jones", "languageCode": "grc" },
+      	"aut": { "url": "https://github.com/alpheios-project/aut", "name": "Autenrieth Homeric Lexicon", "languageCode": "grc" },
+      	"dod": { "url": "https://github.com/alpheios-project/dod", "name": "Dodson", "languageCode": "grc" },
+      	"as":  { "url": "https://github.com/alpheios-project/as", "name": "Abbott-Smith", "languageCode": "grc" },
+
+      	"ls":  { "url": "https://github.com/alpheios-project/ls", "name": "Lewis & Short", "languageCode": "lat" },
+      	"stg":  { "url": "https://github.com/alpheios-project/stg", "name": "Steingass", "languageCode": "per" },
+      	"lan":  { "url": "https://github.com/alpheios-project/lan", "name": "Lane", "languageCode": "ara" },
+      	"sal":  { "url": "https://github.com/alpheios-project/sal", "name": "Lane", "languageCode": "ara" }
+	},
+	"translationlangs": {
+	  "en-US"  : "eng"  ,
+      "it"  : "ita"  ,
+      "pt"  : "por"  ,
+      "ca"  : "cat"  ,
+      "fr"  : "fre"  ,
+      "de"  : "ger"  ,
+      "es"  : "spa"  
+	}
+}
