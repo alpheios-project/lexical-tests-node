@@ -1,25 +1,30 @@
 const CheckTable = require('./check-table.js')
 const DownloadController = require('./download-controller.js')
+const ConfigController = require('./config-controller.js')
 
 class DataController {
-  constructor (sourceFile, configFIle, paramsFile) {
+  constructor (sourceFile, configFile, paramsFile) {
   	try {
       this.sourceData = JSON.parse(sourceFile)
-      this.configData = JSON.parse(configFIle)
-      this.paramsData = JSON.parse(paramsFile)
+      this.configC = new ConfigController(configFile, paramsFile)
 
       console.log('4 JSON files are parsed')
     } catch (err) {
       console.error('Some problems with parsing json files:', err.message)
     }
 
-    this.prepareConfigData()
-    this.prepareSourceData()
-    this.prepareParamsData()
+    this.configC.prepareConfigData()
+    this.configC.prepareParamsData()
 
-    this.resultData = new CheckTable()
+    this.defaultQueueMax = 2
 
-    this.getData()
+    if (this.checkSourceData()) {
+      this.prepareSourceData()
+
+      this.resultData = new CheckTable()
+
+      this.getData()
+    }
   }
 
   async getData () {
@@ -41,72 +46,50 @@ class DataController {
     DownloadController.downloadFailedAnything(this)
   }
 
-  prepareConfigData () {
-  	this.languages = this.prepareLanguagesConfig(this.configData.languages)
-    this.dictionaries = this.configData.dictionaries
-    this.translationlangs = this.configData.translationlangs
-  }
-
-  prepareLanguagesConfig (languagesRaw) {
-    let langRes = {}
-    for (let lang in languagesRaw) {
-      langRes[lang] = {
-        const: languagesRaw[lang],
-        name: languagesRaw[lang]
-      }
+  checkSourceData () {
+    if (!Array.isArray(this.sourceData) && (typeof this.sourceData !== 'object') && (typeof this.sourceData === 'object' && !this.sourceData.data)) {
+      this.uploadError = 'File should contain an array of words or an object with property data, that contains an array of words.'
+      this.sourceData = null
+      return false
     }
-    return langRes
+
+    if (Array.isArray(this.sourceData)) {
+      this.sourceData = { data: this.sourceData.slice(0) }
+    }
+
+    if (this.sourceData.data.some(word => !word.targetWord)) {
+      this.uploadError = 'Each word block in the file should contain targetWord property, you should reload data.'
+      this.sourceData = null
+      return false
+    }
+    if (this.sourceData.data.some(word => !word.languageCode)) {
+      this.uploadError = 'Each word block in the file should contain languageCode property, you should reload data.'
+      this.sourceData = null
+      return false
+    }
+
+    this.sourceData.data.forEach(word => {
+      if (word.lexiconShortOpts && !word.lexiconShortOpts.codes) {
+        word.lexiconShortOpts = { codes: [] }
+      }
+      if (word.lexiconFullOpts && !word.lexiconFullOpts.codes) {
+        word.lexiconFullOpts = { codes: [] }
+      }
+    })
+
+    this.sourceData.queue_max = this.sourceData.queue_max ? parseInt(this.sourceData.queue_max) : this.defaultQueueMax
+    return true
   }
 
   prepareSourceData () {
-    this.sourceData.forEach(dataItem => {
-      dataItem.languageID = Symbol.for(this.languages[dataItem.languageCode].const)
-      dataItem.languageName = this.languages[dataItem.languageCode].name
-      this.prepareLexicalConfigs(dataItem.lexiconShortOpts, dataItem.languageCode)
-      this.prepareLexicalConfigs(dataItem.lexiconFullOpts, dataItem.languageCode)
+    this.sourceData.data.forEach(dataItem => {
+      dataItem.languageID = Symbol.for(this.configC.languages[dataItem.languageCode].const)
+      dataItem.languageName = this.configC.languages[dataItem.languageCode].name
+      this.configC.prepareLexicalConfigs(dataItem.lexiconShortOpts, dataItem.languageCode)
+      this.configC.prepareLexicalConfigs(dataItem.lexiconFullOpts, dataItem.languageCode)
     })
-    this.sourceData.sort(function (a, b) { return a.languageCode < b.languageCode })
+    this.sourceData.data.sort(function (a, b) { return a.languageCode < b.languageCode })
     
-  }
-
-  prepareLexicalConfigs (defOpts, languageCode) {
-    if (defOpts) {
-      if (!defOpts.codes) { defOpts.codes = [] }
-      if (defOpts.codes.length === 0) {
-        defOpts.codes = Object.keys(this.dictionaries).filter(key => this.dictionaries[key].languageCode === languageCode)
-      }
-
-      defOpts.allow = defOpts.codes.map(code => this.dictionaries[code].url)
-      defOpts.dicts = defOpts.codes.map(code => `${code} (${this.dictionaries[code].name})`)
-    }
-  }
-
-  prepareParamsData () {
-  	this.tabDelimiter = this.checkIfUndefined(this.paramsData.tabDelimiter, '\t')
-  	this.langs = this.prepareLangs(this.paramsData.langs)
-
-    this.skipShortDefs = this.checkIfUndefined(this.paramsData.skipShortDefs, false)
-    this.skipFullDefs = this.checkIfUndefined(this.paramsData.skipFullDefs, false)
-
-    this.downloadMorphFlag = this.checkIfUndefined(this.paramsData.downloadMorph, true)
-    this.downloadShortDefFlag = this.checkIfUndefined(this.paramsData.downloadShortDef, true)
-    this.downloadFullDefFlag = this.checkIfUndefined(this.paramsData.downloadFullDef, true)
-
-    this.downloadFailedShortDefFlag = this.checkIfUndefined(this.paramsData.downloadFailedShortDef, true)
-    this.downloadFailedFullDefFlag = this.checkIfUndefined(this.paramsData.downloadFailedFullDef, true)
-
-    this.downloadTranslationsFlag = this.checkIfUndefined(this.paramsData.downloadTranslations, true)
-    this.downloadFailedTranslationsFlag = this.checkIfUndefined(this.paramsData.downloadFailedTranslations, true)
-
-    this.downloadFailedAnythingFlag = this.checkIfUndefined(this.paramsData.downloadFailedAnything, true)
-  }
-
-  prepareLangs (langs) {
-    return langs.map(lang => { return { code: lang, property: this.configData.translationlangs[lang] } })
-  }
-
-  checkIfUndefined (data, defaultVal) {
-  	return (typeof data !== 'undefined') ? data : defaultVal
   }
 }
 

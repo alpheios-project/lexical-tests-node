@@ -6,27 +6,27 @@ class CheckTable {
   }
 
   async getData (dataController) {
-    let sourceData = dataController.sourceData
+    let sourceData = dataController.sourceData.data
     for (let i = 0; i < sourceData.length; i++) {
       let sourceItem = sourceData[i]
       let lexQuery = new LexicalQuery(sourceItem)
 
-      let homonymData = await this.getMorphData(lexQuery, dataController.langs, dataController.skipShortDefs, dataController.skipFullDefs)
+      let homonymData = await this.getMorphData(lexQuery, dataController.configC.langs, dataController.configC.skipShortDefs, dataController.configC.skipFullDefs)
       this.data.push(homonymData)
 
       if (lexQuery.homonym && lexQuery.homonym.lexemes) {
         lexQuery.homonym.lexemes.forEach(lex => { lex.meaning.shortDefs = [] })
 
-        if (lexQuery.lexiconShortOpts && !dataController.skipShortDefs) {
+        if (lexQuery.lexiconShortOpts && !dataController.configC.skipShortDefs) {
           await this.getShortDefsData(lexQuery, homonymData)
         }
 
-        if (lexQuery.lexiconFullOpts && !dataController.skipFullDefs) {
+        if (lexQuery.lexiconFullOpts && !dataController.configC.skipFullDefs) {
           await this.getFullDefsData(lexQuery, homonymData)
         }
 
-        if (dataController.langs.length > 0) {
-          await this.getLemmaTranslations(lexQuery, homonymData, dataController.langs)
+        if (dataController.configC.langs.length > 0) {
+          await this.getLemmaTranslations(lexQuery, homonymData, dataController.configC.langs)
         }
       }
 
@@ -270,10 +270,10 @@ class CheckTable {
     this.fullDefData = dictsTables
   }
 
-  createTranslationsDataDownload () {
+  createTranslationsDataDownload (langsS) {
     let table = []
-    if (this.data[0].langs && this.data[0].langs.length > 0) {
-      let langs = this.data[0].langs.map(lang => lang.property)
+    if (langsS && langsS.length > 0) {
+      let langs = langsS.map(lang => lang.property)
 
       let header = ['TargetWord', 'Language', 'Lemma', ...langs]
 
@@ -416,8 +416,8 @@ class CheckTable {
     this.failedFullDef = table
   }
 
-  createFailedTranslationsDownload () {
-    let langs = this.data[0].langs.map(lang => lang.property)
+  createFailedTranslationsDownload (langsS) {
+    let langs = langsS.map(lang => lang.property)
 
     let table = []
     let header = ['TargetWord', 'Language', 'Lemma', ...langs]

@@ -23,6 +23,7 @@
     "alpheios-lexicon-client": "github:alpheios-project/lexicon-client",
     "alpheios-morph-client": "github:alpheios-project/morph-client",
     "alpheios-node-build": "github:alpheios-project/node-build",
+    "async-await-parallel": "*",
     "axios": "*",
     "fs": "0.0.1-security",
     "mkdirp": "*",
