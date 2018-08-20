@@ -19,28 +19,28 @@ npm install
 ## Examples:
 ### from dist folder using node.js
 ```
-node alpheios-lt-cmdtool paramsFile dataFile configFile
+node alpheios-lt-cmdtool dataFile paramsFile configFile
 ```
 
 ### from packaged folder (node.js is packed inside, so you don't need to setup node.js)
 ### Linux
 ```
-alpheios-lt-cmdtool-linux paramsFile dataFile configFile
+alpheios-lt-cmdtool-linux dataFile paramsFile configFile
 ```
 ### Mac OS
 ```
-alpheios-lt-cmdtool-macos paramsFile dataFile configFile
+alpheios-lt-cmdtool-macos dataFile paramsFile configFile
 ```
 ### Windows
 ```
-alpheios-lt-cmdtool-win paramsFile dataFile configFile
+alpheios-lt-cmdtool-win dataFile paramsFile configFile
 ```
 
 ## Parameters:
 
-**paramsFile** - *optional* - json file (default = **params.json**)
-
 **dataFile** - *optional* - json file (default = **data.json**)
+
+**paramsFile** - *optional* - json file (default = **params.json**)
 
 **configFile** - *optional* - json file (default = **config.json**)
 
