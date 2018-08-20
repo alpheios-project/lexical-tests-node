@@ -1,8 +1,8 @@
 const FileController = require('./lib/file-controller.js')
 const DataController = require('./lib/data-controller.js')
 
-const paramsFile = process.argv[2] || 'params.json'
-const dataFile = process.argv[3] || 'data.json'
+const dataFile = process.argv[2] || 'data.json'
+const paramsFile = process.argv[3] || 'params.json'
 const configFile = process.argv[4] || 'config.json'
 
 if (!dataFile) {

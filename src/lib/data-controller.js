@@ -28,7 +28,7 @@ class DataController {
   }
 
   async getData () {
-  	await this.resultData.getData(this) 
+  	await this.resultData.getData(this.sourceData, this.configC) 
 
   	this.downloadData()
   }
