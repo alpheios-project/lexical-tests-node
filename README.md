@@ -72,7 +72,7 @@ alpheios-lt-cmdtool-win dataFile paramsFile configFile
 | **data** | Array of Objects | + |  | The array ob objects, each one defines a word and it's options for collecting data, The object structure should be the same as desacribed in the **dataFile (variant 2)** |
 
 
-### dataFile (variant 2) - array:
+### dataFile (variant 2) - Array of Objects:
 
 | Name | Obligatory | Default | Description |
 |------|------------|---------|-------------|
@@ -82,3 +82,9 @@ alpheios-lt-cmdtool-win dataFile paramsFile configFile
 | **lexiconShortOpts** |  |  | It is the same as for **lexiconShortOpts** |
 
 
+### configFile:
+
+| Name | Type | Obligatory | Default | Description |
+|------|------|------------|---------|-------------|
+| **languages** | Object | + | | Object defines available languages for getting morph data.<br>It has the following structure:<br>`key` - languageCode (lat, grc, per, ara)<br>`value` - the name of the language, the same as it called in Constants - latin, greek, persian, arabic |
+| **dictionaries** | Object | + | | Object defines available dictionaries for getting lexical data.<br>It has the following structure:<br>`key` - dictionaryCode<br>`value` - Object with the following structure:<br>`url` - url of getting data from the dictionary,<br>`name` - dictionary name for using it in the printed results,<br>`languageCode` - languageCode of the dictionary |
