@@ -15,9 +15,7 @@
 		},
 		{
 			"targetWord": "mare",
-	        "languageCode": "lat",
-	        "lexiconShortOpts": { "codes": ["ls"] },
-	        "lexiconFullOpts": { "codes": ["ls"] }
+	        "languageCode": "lat"
 		},
 		{
 			"targetWord": "συνδέει",

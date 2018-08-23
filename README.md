@@ -45,33 +45,47 @@ alpheios-lt-cmdtool-win dataFile paramsFile configFile
 **configFile** - *optional* - json file (default = **config.json**)
 
 
-## paramsFile:
+### paramsFile:
 
-{
-  "tabDelimiter": "\t",
+| Name | Type | Obligatory | Default | Description |
+|------|------|------------|---------|-------------|
+| **tabDelimiter** | String | | `\t` | Delimiter is used in .csv files |
+| **langs** | Array of Strings | | `[]` | Used for defining translation's languages to translation-client  |
+| **skipShortDefs** | Boolean | | `false` | Define if requests for short definitions should be skipped |
+| **skipFullDefs** | Boolean | | `false` | Define if requests for full definitions should be skipped |
+| **downloadMorph** | Boolean | | `false` | Define if CSV with morph data should be created |
+| **downloadShortDef** | Boolean | | `false` | Define if CSV with short definitions should be created |
+| **downloadFullDef** | Boolean | | `false` | Define if CSV with full definitions should be created |
+| **downloadTranslations** | Boolean | | `false` | Define if CSV with translations should be created |
+| **downloadFailedMorph** | Boolean | | `false` | Define if CSV with failed words from morph-client should be created |
+| **downloadFailedShortDef** | Boolean | | `false` | Define if CSV with words failed to get short definitions from lexical-client should be created |
+| **downloadFailedFullDef** | Boolean | | `false` | Define if CSV with words failed to get full definitions from lexical-client should be created |
+| **downloadFailedTranslations** | Boolean | | `false` | Define if CSV with words failed to get translations from lemma-client should be created |
+| **downloadFailedAnything** | Boolean | | `false` | Define if CSV with words failed in any case should be created |
 
-  "langs": ["en-US", "it", "pt", "ca", "fr", "de", "es"],
 
-  "skipShortDefs": false,
+### dataFile (variant 1) - Object:
 
-  "skipFullDefs": false,
+| Name | Type | Obligatory | Default | Description |
+|------|------|------------|---------|-------------|
+| **queue_max** | Integer | | 2 | The amount of parallel requests (by target word) |
+| **data** | Array of Objects | + |  | The array ob objects, each one defines a word and it's options for collecting data, The object structure should be the same as desacribed in the **dataFile (variant 2)** |
 
-  "downloadMorph": true,
 
-  "downloadShortDef": true,
+### dataFile (variant 2) - Array of Objects:
 
-  "downloadFullDef": true,
+| Name | Type | Obligatory | Default | Description |
+|------|------|------------|---------|-------------|
+| **targetWord** | String | + |  | A word for collecting data about |
+| **languageCode** | String | + |  | A language identifier of the target word - variants are defined in configFile - lat, grc, per, ara |
+| **lexiconShortOpts** | Object |  |  | There are 3 variants of defining this parameter: <br> * no data at all, fetch for short definitions will be skipped <br>* empty object or `{ "codes": [] }`, fetch for short definitions will be done for all available dictionaries <br>* `{ "codes": ["lsj"] }` - with defined dictionary codes in `code` array, fetch for short definitions will be done for pointed dictionaries |
+| **lexiconShortOpts** | Object |  |  | It is the same as for **lexiconShortOpts** |
 
-  "downloadTranslations": true,
 
-  "downloadFailedMorph": true,
+### configFile:
 
-  "downloadFailedShortDef": true,
-
-  "downloadFailedFullDef": true,
-
-  "downloadFailedTranslations": true,
-  
-  "downloadFailedAnything": true
-}
-
+| Name | Type | Obligatory | Default | Description |
+|------|------|------------|---------|-------------|
+| **languages** | Object | + | | Object defines available languages for getting morph data.<br>It has the following structure:<br>`key` - languageCode (lat, grc, per, ara)<br>`value` - the name of the language, the same as it called in Constants - latin, greek, persian, arabic |
+| **dictionaries** | Object | + | | Object defines available dictionaries for getting lexical data.<br>It has the following structure:<br>`key` - dictionaryCode<br>`value` - Object with the following structure:<br><br> - `url` - url of getting data from the dictionary,<br> - `name` - dictionary name for using it in the printed results,<br> - `languageCode` - languageCode of the dictionary |
+| **translationlangs** | Object | + | | Object defines available languages for getting translations from lemma-client.<br>It has the following structure:<br>`key` - languageCode (browser language)<br>`value` - languageCode (translation language) |

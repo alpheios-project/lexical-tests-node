@@ -85,7 +85,9 @@ class DataController {
     this.sourceData.data.forEach(dataItem => {
       dataItem.languageID = Symbol.for(this.configC.languages[dataItem.languageCode].const)
       dataItem.languageName = this.configC.languages[dataItem.languageCode].name
+
       this.configC.prepareLexicalConfigs(dataItem.lexiconShortOpts, dataItem.languageCode)
+
       this.configC.prepareLexicalConfigs(dataItem.lexiconFullOpts, dataItem.languageCode)
     })
     this.sourceData.data.sort(function (a, b) { return a.languageCode < b.languageCode })
