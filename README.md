@@ -47,27 +47,38 @@ alpheios-lt-cmdtool-win dataFile paramsFile configFile
 
 ### paramsFile:
 
-| Name | Obligatory | Default | Description |
-|------|------------|---------|-------------|
-| **tabDelimiter** | | `\t` | Delimiter is used in .csv files |
-| **langs** | | `[]` | Used for defining translation's languages to translation-client  |
-| **skipShortDefs** | | `false` | Define if requests for short definitions should be skipped |
-| **skipFullDefs** | | `false` | Define if requests for full definitions should be skipped |
-| **downloadMorph** | | `false` | Define if CSV with morph data should be created |
-| **downloadShortDef** | | `false` | Define if CSV with short definitions should be created |
-| **downloadFullDef** | | `false` | Define if CSV with full definitions should be created |
-| **downloadTranslations** | | `false` | Define if CSV with translations should be created |
-| **downloadFailedMorph** | | `false` | Define if CSV with failed words from morph-client should be created |
-| **downloadFailedShortDef** | | `false` | Define if CSV with words failed to get short definitions from lexical-client should be created |
-| **downloadFailedFullDef** | | `false` | Define if CSV with words failed to get full definitions from lexical-client should be created |
-| **downloadFailedTranslations** | | `false` | Define if CSV with words failed to get translations from lemma-client should be created |
-| **downloadFailedAnything** | | `false` | Define if CSV with words failed in any case should be created |
+| Name | Type | Obligatory | Default | Description |
+|------|------|------------|---------|-------------|
+| **tabDelimiter** | String | | `\t` | Delimiter is used in .csv files |
+| **langs** | Array of Strings | | `[]` | Used for defining translation's languages to translation-client  |
+| **skipShortDefs** | Boolean | | `false` | Define if requests for short definitions should be skipped |
+| **skipFullDefs** | Boolean | | `false` | Define if requests for full definitions should be skipped |
+| **downloadMorph** | Boolean | | `false` | Define if CSV with morph data should be created |
+| **downloadShortDef** | Boolean | | `false` | Define if CSV with short definitions should be created |
+| **downloadFullDef** | Boolean | | `false` | Define if CSV with full definitions should be created |
+| **downloadTranslations** | Boolean | | `false` | Define if CSV with translations should be created |
+| **downloadFailedMorph** | Boolean | | `false` | Define if CSV with failed words from morph-client should be created |
+| **downloadFailedShortDef** | Boolean | | `false` | Define if CSV with words failed to get short definitions from lexical-client should be created |
+| **downloadFailedFullDef** | Boolean | | `false` | Define if CSV with words failed to get full definitions from lexical-client should be created |
+| **downloadFailedTranslations** | Boolean | | `false` | Define if CSV with words failed to get translations from lemma-client should be created |
+| **downloadFailedAnything** | Boolean | | `false` | Define if CSV with words failed in any case should be created |
 
-### dataFile (variant 1) - array:
+
+### dataFile (variant 1) - Object:
+
+| Name | Type | Obligatory | Default | Description |
+|------|------|------------|---------|-------------|
+| **queue_max** | Integer | | 2 | The amount of parallel requests (by target word) |
+| **data** | Array of Objects | + |  | The array ob objects, each one defines a word and it's options for collecting data, The object structure should be the same as desacribed in the **dataFile (variant 2)** |
+
+
+### dataFile (variant 2) - array:
 
 | Name | Obligatory | Default | Description |
 |------|------------|---------|-------------|
 | **targetWord** | + |  | A word for collecting data about |
 | **languageCode** | + |  | A language identifier of the target word - variants are defined in configFile - lat, grc, per, ara |
 | **lexiconShortOpts** |  |  | There are 3 variants of defining this parameter: <br> * no data at all, fetch for short definitions will be skipped <br>* empty object or `{ "codes": [] }`, fetch for short definitions will be done for all available dictionaries <br>* `{ "codes": ["lsj"] }` - with defined dictionary codes in `code` array, fetch for short definitions will be done for pointed dictionaries |
+| **lexiconShortOpts** |  |  | It is the same as for **lexiconShortOpts** |
+
 
