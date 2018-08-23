@@ -19,7 +19,7 @@ class CheckTable {
     let rowData = this.formatHomonymData(dataItem, params)
     this.data.push(rowData)
 
-    if (dataItem.homonym && dataItem.homonym.lexemes && rowData.lexiconShortOpts.allow && !params.skipShortDefs) {
+    if (dataItem.homonym && dataItem.homonym.lexemes && rowData.lexiconShortOpts && rowData.lexiconShortOpts.allow && !params.skipShortDefs) {
       dataItem.homonym.lexemes.forEach(lex => { lex.meaning.shortDefs = [] })
 
       let res2 = await lexQuery.prepareShortDefsRequests(dataItem, rowData)
@@ -31,7 +31,7 @@ class CheckTable {
       this.formatShortDefsData(dataItem, rowData)
     }
 
-    if (dataItem.homonym && dataItem.homonym.lexemes && rowData.lexiconFullOpts.allow && !params.skipFullDefs) {
+    if (dataItem.homonym && dataItem.homonym.lexemes && rowData.lexiconFullOpts && rowData.lexiconFullOpts.allow && !params.skipFullDefs) {
       let res2 = await lexQuery.prepareFullDefsRequests(dataItem, rowData)
 
       if (rowData.definitionFullRequests && rowData.definitionFullRequests.length > 0) {

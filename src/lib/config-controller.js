@@ -5,12 +5,7 @@ class ConfigController {
   }
 
   prepareConfigData () {
-    if (!this.configFile.languages || !Array.isArra(this.configFile.languages)) {
-      this.languages = []
-    } else {
-      this.languages = this.prepareLanguagesConfig(this.configFile.languages)
-    }
-    
+    this.languages = this.prepareLanguagesConfig(this.configFile.languages)
     this.dictionaries = this.configFile.dictionaries
     this.translationlangs = this.configFile.translationlangs
   }
@@ -41,12 +36,18 @@ class ConfigController {
 
   prepareParamsData () {
     this.tabDelimiter = this.checkIfUndefined(this.paramsFile.tabDelimiter, '\t')
-    this.langs = this.prepareLangs(this.paramsFile.langs)
+    if (!this.paramsFile.langs || !Array.isArray(this.paramsFile.langs)) {
+      this.langs = []
+    } else {
+      this.langs = this.prepareLangs(this.paramsFile.langs)
+    }
 
     this.skipShortDefs = this.checkIfUndefined(this.paramsFile.skipShortDefs, false)
     this.skipFullDefs = this.checkIfUndefined(this.paramsFile.skipFullDefs, false)
 
     this.downloadMorphFlag = this.checkIfUndefined(this.paramsFile.downloadMorph, true)
+    this.downloadFailedMorphFlag = this.checkIfUndefined(this.paramsFile.downloadFailedMorph, true)
+
     this.downloadShortDefFlag = this.checkIfUndefined(this.paramsFile.downloadShortDef, true)
     this.downloadFullDefFlag = this.checkIfUndefined(this.paramsFile.downloadFullDef, true)
 

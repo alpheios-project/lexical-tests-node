@@ -47,18 +47,29 @@ alpheios-lt-cmdtool-win dataFile paramsFile configFile
 
 ### paramsFile:
 
-| Name | Default | Description |
-|------|---------|-------------|
-| **tabDelimiter** | `\t` | Delimiter is used in .csv files |
-| **langs** | `[]` | Used for defining translation's languages to translation-client  |
-| **skipShortDefs** | `false` | Define if requests for short definitions should be skipped |
-| **skipFullDefs** | `false` | Define if requests for full definitions should be skipped |
-| **downloadMorph** | `false` | Define if CSV with morph data should be created |
-| **downloadShortDef** | `false` | Define if CSV with short definitions should be created |
-| **downloadFullDef** | `false` | Define if CSV with full definitions should be created |
-| **downloadTranslations** | `false` | Define if CSV with translations should be created |
-| **downloadFailedMorph** | `false` | Define if CSV with failed words from morph-client should be created |
-| **downloadFailedShortDef** | `false` | Define if CSV with words failed to get short definitions from lexical-client should be created |
-| **downloadFailedFullDef** | `false` | Define if CSV with words failed to get full definitions from lexical-client should be created |
-| **downloadFailedTranslations** | `false` | Define if CSV with words failed to get translations from lemma-client should be created |
-| **downloadFailedAnything** | `false` | Define if CSV with words failed in any case should be created |
+| Name | Obligatory | Default | Description |
+|------|------------|---------|-------------|
+| **tabDelimiter** | | `\t` | Delimiter is used in .csv files |
+| **langs** | | `[]` | Used for defining translation's languages to translation-client  |
+| **skipShortDefs** | | `false` | Define if requests for short definitions should be skipped |
+| **skipFullDefs** | | `false` | Define if requests for full definitions should be skipped |
+| **downloadMorph** | | `false` | Define if CSV with morph data should be created |
+| **downloadShortDef** | | `false` | Define if CSV with short definitions should be created |
+| **downloadFullDef** | | `false` | Define if CSV with full definitions should be created |
+| **downloadTranslations** | | `false` | Define if CSV with translations should be created |
+| **downloadFailedMorph** | | `false` | Define if CSV with failed words from morph-client should be created |
+| **downloadFailedShortDef** | | `false` | Define if CSV with words failed to get short definitions from lexical-client should be created |
+| **downloadFailedFullDef** | | `false` | Define if CSV with words failed to get full definitions from lexical-client should be created |
+| **downloadFailedTranslations** | | `false` | Define if CSV with words failed to get translations from lemma-client should be created |
+| **downloadFailedAnything** | | `false` | Define if CSV with words failed in any case should be created |
+
+### dataFile (variant 1) - array:
+
+| Name | Obligatory | Default | Description |
+|------|------------|---------|-------------|
+| **targetWord** | + |  | A word for collecting data about |
+| **languageCode** | + |  | A language identifier of the target word - variants are defined in configFile - lat, grc, per, ara |
+| **lexiconShortOpts** |  |  | There are 3 variants of defining this parameter: 
+                                * no data at all, fetch for short definitions will be skipped
+                                * empty object or `{ "codes": [] }`, fetch for short definitions will be done for all available dictionaries
+                                * `{ "codes": ["lsj"] }` - with defined dictionary codes in `code` array, fetch for short definitions will be done for pointed dictionaries |

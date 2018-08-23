@@ -1,6 +1,6 @@
 {
   "tabDelimiter": "\t",
-  "langs": ["en-US", "it", "pt", "ca", "fr", "de", "es"],
+
   "skipShortDefs": false,
   "skipFullDefs": false,
 
