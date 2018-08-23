@@ -5,7 +5,12 @@ class ConfigController {
   }
 
   prepareConfigData () {
-    this.languages = this.prepareLanguagesConfig(this.configFile.languages)
+    if (!this.configFile.languages || !Array.isArra(this.configFile.languages)) {
+      this.languages = []
+    } else {
+      this.languages = this.prepareLanguagesConfig(this.configFile.languages)
+    }
+    
     this.dictionaries = this.configFile.dictionaries
     this.translationlangs = this.configFile.translationlangs
   }

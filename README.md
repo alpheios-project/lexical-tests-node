@@ -45,33 +45,20 @@ alpheios-lt-cmdtool-win dataFile paramsFile configFile
 **configFile** - *optional* - json file (default = **config.json**)
 
 
-## paramsFile:
+### paramsFile:
 
-{
-  "tabDelimiter": "\t",
-
-  "langs": ["en-US", "it", "pt", "ca", "fr", "de", "es"],
-
-  "skipShortDefs": false,
-
-  "skipFullDefs": false,
-
-  "downloadMorph": true,
-
-  "downloadShortDef": true,
-
-  "downloadFullDef": true,
-
-  "downloadTranslations": true,
-
-  "downloadFailedMorph": true,
-
-  "downloadFailedShortDef": true,
-
-  "downloadFailedFullDef": true,
-
-  "downloadFailedTranslations": true,
-  
-  "downloadFailedAnything": true
-}
-
+| Name | Default | Description |
+|------|---------|-------------|
+| **tabDelimiter** | `\t` | Delimiter is used in .csv files |
+| **langs** | `[]` | Used for defining translation's languages to translation-client  |
+| **skipShortDefs** | `false` | Define if requests for short definitions should be skipped |
+| **skipFullDefs** | `false` | Define if requests for full definitions should be skipped |
+| **downloadMorph** | `false` | Define if CSV with morph data should be created |
+| **downloadShortDef** | `false` | Define if CSV with short definitions should be created |
+| **downloadFullDef** | `false` | Define if CSV with full definitions should be created |
+| **downloadTranslations** | `false` | Define if CSV with translations should be created |
+| **downloadFailedMorph** | `false` | Define if CSV with failed words from morph-client should be created |
+| **downloadFailedShortDef** | `false` | Define if CSV with words failed to get short definitions from lexical-client should be created |
+| **downloadFailedFullDef** | `false` | Define if CSV with words failed to get full definitions from lexical-client should be created |
+| **downloadFailedTranslations** | `false` | Define if CSV with words failed to get translations from lemma-client should be created |
+| **downloadFailedAnything** | `false` | Define if CSV with words failed in any case should be created |
