@@ -79,7 +79,7 @@ alpheios-lt-cmdtool-win dataFile paramsFile configFile
 | **targetWord** | String | + |  | A word for collecting data about |
 | **languageCode** | String | + |  | A language identifier of the target word - variants are defined in configFile - lat, grc, per, ara |
 | **lexiconShortOpts** | Object |  |  | There are 3 variants of defining this parameter: <br> * no data at all, fetch for short definitions will be skipped <br>* empty object or `{ "codes": [] }`, fetch for short definitions will be done for all available dictionaries <br>* `{ "codes": ["lsj"] }` - with defined dictionary codes in `code` array, fetch for short definitions will be done for pointed dictionaries |
-| **lexiconShortOpts** | Object |  |  | It is the same as for **lexiconShortOpts** |
+| **lexiconFullOpts** | Object |  |  | It is the same as for **lexiconShortOpts** but specifies the dictionary or dictionaries from which to retrieve full definitions |
 
 
 ### configFile:
