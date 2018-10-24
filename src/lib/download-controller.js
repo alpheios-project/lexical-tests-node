@@ -3,7 +3,7 @@ const FileController = require('./file-controller.js')
 class DownloadController {
 
   static downloadMorph (dc) {
-  	if (dc.configC.downloadMorphFlag) {
+  	if (!dc.configC.skipMorph && dc.configC.downloadMorphFlag) {
       dc.resultData.createMorphDataDownload()
 
       if (dc.resultData.morphData.length > 1) {
@@ -17,7 +17,7 @@ class DownloadController {
   static downloadShortDef (dc) {
   	if (!dc.configC.skipShortDefs && dc.configC.downloadShortDefFlag) {
       dc.resultData.createShortDefDownload()
-      
+
       if (dc.resultData.shortDefData.length > 1) {
         FileController.writeCSVData(dc.resultData.shortDefData, dc.configC.tabDelimiter, '-shortDefData.csv')
       } else {
@@ -49,7 +49,7 @@ class DownloadController {
         FileController.writeCSVData(dc.resultData.translationsData, dc.configC.tabDelimiter, '-translationsData.csv')
       } else {
         console.info('There are no data to download translations data')
-      }      
+      }
     }
   }
 
@@ -61,7 +61,7 @@ class DownloadController {
         FileController.writeCSVData(dc.resultData.failedMorph, dc.configC.tabDelimiter, '-failedMorph.csv')
       } else {
         console.info('There are no data to download failed morph data')
-      } 
+      }
     }
   }
 
@@ -73,7 +73,7 @@ class DownloadController {
         FileController.writeCSVData(dc.resultData.failedShortDef, dc.configC.tabDelimiter, '-failedShortDef.csv')
       } else {
         console.info('There are no data to download failed short definitions data')
-      } 
+      }
     }
   }
 
