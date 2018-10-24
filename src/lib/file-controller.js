@@ -7,6 +7,11 @@ const csvParser = require('papaparse')
 
 const processDir = (process.execPath.search(/node.[a-z]+$/g) == -1) ? path.dirname(process.execPath) : __dirname
 
+let createFile = function createFile (filePath) {
+  'use strict'
+  fs.unlink(filePath,(err) => {})
+}
+
 let writeFile = function writeData (data, filePath) {
   'use strict'
   fs.writeFileSync(filePath, '\ufeff' + data, {encoding: 'utf8'})
@@ -15,6 +20,11 @@ let writeFile = function writeData (data, filePath) {
 let readFile = function readFile (filePath) {
   'use strict'
   return fs.readFileSync(filePath, 'utf8')
+}
+
+let appendFile = function appendFile (data, filePath) {
+  'use strict'
+  fs.appendFileSync(filePath, `${data}\n`, {encoding: 'utf8'})
 }
 
 class FileController {
@@ -45,6 +55,16 @@ class FileController {
     mkdirp(folderPath, function (err) {
       if (err) console.error(err)
     })
+  }
+
+  static createLogFile(filename ) {
+  	let outputFN = path.join(processDir, '/results/'+ filename)
+    createFile(outputFN)
+  }
+
+  static appendLogData (data, filename) {
+  	let outputFN = path.join(processDir, '/results/'+ filename)
+    appendFile(data, outputFN)
   }
 }
 

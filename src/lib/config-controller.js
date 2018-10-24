@@ -42,6 +42,7 @@ class ConfigController {
       this.langs = this.prepareLangs(this.paramsFile.langs)
     }
 
+    this.skipMorph = this.checkIfUndefined(this.paramsFile.skipMorph, false)
     this.skipShortDefs = this.checkIfUndefined(this.paramsFile.skipShortDefs, false)
     this.skipFullDefs = this.checkIfUndefined(this.paramsFile.skipFullDefs, false)
 

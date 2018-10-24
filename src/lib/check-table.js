@@ -1,23 +1,45 @@
 const LexicalQuery = require('./lexical-query.js')
 const parallel = require('async-await-parallel')
+const FileController = require('./file-controller.js')
+const models = require('alpheios-data-models')
 
 class CheckTable {
   constructor () {
     this.data = []
+    this.counter = 0
+    this.logFile = 'results.log'
+    FileController.createLogFile(this.logFile)
+    this.logOnlyFailures = false
   }
 
   async getData (sourceData, params) {
+    let size = sourceData.data.length
     const res = await parallel(
-      sourceData.data.map(dataItem => async () => { await this.getDataWord(dataItem, params) })
+      sourceData.data.map(dataItem => async () => { await this.getDataWord(dataItem, params, ++this.counter, size) })
       , sourceData.queue_max)
     console.info('finish to collect data')
   }
 
-  async getDataWord (dataItem, params) {
+  async getDataWord (dataItem, params,counter, size) {
+    dataItem.index = `${counter}/${size}`
+    let start = Date.now()
     let lexQuery = new LexicalQuery()
-    let res1 = await lexQuery.getMorphData(dataItem)
-    let rowData = this.formatHomonymData(dataItem, params)
+    let checkpoint = start
+    let time
+    let rowData = this.initRowData(dataItem, params)
     this.data.push(rowData)
+    if (!params.skipMorph) {
+      let res1 = await lexQuery.getMorphData(dataItem)
+      checkpoint = Date.now()
+      time = checkpoint - start
+      this.formatMorphData(dataItem, rowData)
+      let status = dataItem.homonym && dataItem.homonym.morphClient ? true :false
+      this.logOutput(dataItem,"morphClient",status,time,this.logOnlyFailures)
+    } else {
+      let formLexeme = new models.Lexeme(new models.Lemma(dataItem.targetWord, dataItem.languageID), [])
+      dataItem.homonym = new models.Homonym([formLexeme], dataItem.targetWord)
+    }
+    this.initLexemes(dataItem, rowData)
 
     if (dataItem.homonym && dataItem.homonym.lexemes && rowData.lexiconShortOpts && rowData.lexiconShortOpts.allow && !params.skipShortDefs) {
       dataItem.homonym.lexemes.forEach(lex => { lex.meaning.shortDefs = [] })
@@ -29,6 +51,11 @@ class CheckTable {
       }
 
       this.formatShortDefsData(dataItem, rowData)
+      let cpt = Date.now()
+      time = cpt - checkpoint
+      checkpoint = cpt
+      let status = dataItem.homonym && dataItem.homonym.shortDefs
+      this.logOutput(dataItem,"shortDefs",status,time,this.logOnlyFailures)
     }
 
     if (dataItem.homonym && dataItem.homonym.lexemes && rowData.lexiconFullOpts && rowData.lexiconFullOpts.allow && !params.skipFullDefs) {
@@ -37,8 +64,12 @@ class CheckTable {
       if (rowData.definitionFullRequests && rowData.definitionFullRequests.length > 0) {
         let res3 = await lexQuery.getDefs(rowData.definitionFullRequests)
       }
-
       this.formatFullDefsData(dataItem, rowData)
+      let cpt = Date.now()
+      time = cpt - checkpoint
+      checkpoint = cpt
+      let status = dataItem.homonym && dataItem.homonym.fullDefs
+      this.logOutput(dataItem,"fullDefs",status,time,this.logOnlyFailures)
     }
 
     if (dataItem.homonym && dataItem.homonym.lexemes && params.langs && params.langs.length > 0) {
@@ -46,49 +77,59 @@ class CheckTable {
       let res4 = await lexQuery.getLemmaTranslations(langs, dataItem, rowData)
 
       this.formatTranslationsData(params.langs, dataItem, rowData)
+      let cpt = Date.now()
+      time = cpt - checkpoint
+      let status = dataItem.homonym && dataItem.homonym.translations
+      this.logOutput(dataItem,"translations",status,time)
     }
+    let end = Date.now()
+    time = end - start
   }
 
-  formatHomonymData (dataItem, params) {
+  initRowData (dataItem, params) {
     let rowData = {
       targetWord: dataItem.targetWord,
       languageID: dataItem.languageID,
       languageName: dataItem.languageName,
       lexiconShortOpts: dataItem.lexiconShortOpts,
       lexiconFullOpts: dataItem.lexiconFullOpts,
-
       skipShortDefs: params.skipShortDefs,
       skipFullDefs: params.skipFullDefs,
       langs: params.langs,
-
       morphClient: false
     }
+    return rowData
+  }
 
+  formatMorphData (dataItem, rowData) {
     if (dataItem.homonym && dataItem.homonym.lexemes) {
       rowData.morphClient = true
-
-      rowData.lexemes = []
-      dataItem.homonym.lexemes.forEach(lexeme => {
-        let lexemeData = { lemmaWord: lexeme.lemma.word, morphData: {} }
-        lexemeData.morphData.principalParts = lexeme.lemma.principalParts.join('; ')
-        for (let feature in lexeme.lemma.features) {
-          lexemeData.morphData[feature] = lexeme.lemma.features[feature].value
-        }
-
-        if (lexeme.meaning.shortDefs.length > 0) {
-          lexemeData.morphShortDefs = lexeme.meaning.shortDefs.map(def => def.text)
-        }
-        rowData.lexemes.push(lexemeData)
-      })
+      dataItem.morphClient = true
     }
-    return rowData
+  }
+
+  initLexemes(dataItem, rowData) {
+    rowData.lexemes = []
+    dataItem.homonym.lexemes.forEach(lexeme => {
+      let lexemeData = { lemmaWord: lexeme.lemma.word, morphData: {} }
+      lexemeData.morphData.principalParts = lexeme.lemma.principalParts.join('; ')
+      for (let feature in lexeme.lemma.features) {
+        lexemeData.morphData[feature] = lexeme.lemma.features[feature].value
+      }
+
+      if (lexeme.meaning.shortDefs.length > 0) {
+        lexemeData.morphShortDefs = lexeme.meaning.shortDefs.map(def => def.text)
+      }
+      rowData.lexemes.push(lexemeData)
+    })
   }
 
   formatShortDefsData (dataItem, rowData) {
     dataItem.homonym.lexemes.forEach((lexeme, index) => {
       rowData.lexemes[index].shortDefData = { lexClient: false }
-      if (lexeme.meaning.shortDefs.length > 0) {
-        rowData.lexemes[index].shortDefData.lexClient = true
+      if (lexeme.meaning.shortDefs && lexeme.meaning.shortDefs.length > 0) {
+        dataItem.homonym.shortDefs = lexeme.meaning.shortDefs.filter(d => d && d.text).length > 0
+        rowData.lexemes[index].shortDefData.lexClient = dataItem.homonym.shortDefs
         rowData.lexemes[index].shortDefData.shortDefs = lexeme.meaning.shortDefs.map(def => { return { text: def.text, code: def.code, dict: def.dict } })
       }
     })
@@ -97,8 +138,9 @@ class CheckTable {
   formatFullDefsData (dataItem, rowData) {
     dataItem.homonym.lexemes.forEach((lexeme, index) => {
       rowData.lexemes[index].fullDefData = { lexClient: false }
-      if (lexeme.meaning.fullDefs.length > 0) {
-        rowData.lexemes[index].fullDefData.lexClient = true
+      if (lexeme.meaning.fullDefs && lexeme.meaning.fullDefs.length > 0) {
+        dataItem.homonym.fullDefs = lexeme.meaning.fullDefs.filter(d => d && d.text).length > 0
+        rowData.lexemes[index].fullDefData.lexClient = dataItem.homonym.fullDefs
         rowData.lexemes[index].fullDefData.fullDefs = lexeme.meaning.fullDefs.map(def => { return { text: def.text, code: def.code, dict: def.dict } })
       }
     })
@@ -111,6 +153,7 @@ class CheckTable {
         let curTrans = lexeme.lemma.translations.filter(trans => trans.languageCode === lang.property)
 
         if (curTrans.length === 0) {
+          dataItem.homonym.translations = true
           rowData.lexemes[index].translations[lang.property] = { languageCode: lang.property }
         } else {
           rowData.lexemes[index].translations[lang.property] = curTrans[0]
@@ -308,7 +351,7 @@ class CheckTable {
     }
     this.translationsData = table
   }
-  
+
   createFailedMorphDownload () {
     let table = []
     let header = ['TargetWord', 'Language', 'MorphClient']
@@ -499,6 +542,14 @@ class CheckTable {
     })
 
     this.failedAnything = table
+  }
+
+  logOutput(dataItem,queryType,status,time,failuresOnly=true) {
+    if (! failuresOnly || ! status) {
+      let message = `${dataItem.index},${dataItem.targetWord},${queryType}:${status},${time}`
+      FileController.appendLogData(message,this.logFile)
+      console.error(message)
+    }
   }
 }
 

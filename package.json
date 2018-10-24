@@ -19,7 +19,7 @@
   "homepage": "git://github.com/alpheios-project/lexical-tests-node#readme",
   "devDependencies": {
     "alpheios-data-models": "github:alpheios-project/data-models",
-    "alpheios-lemma-client": "github:alpheios-project/lemma-client",
+    "alpheios-lemma-client": "github:alpheios-project/lemma-client#25100ded621509a4451de6f4676e0d166594005c",
     "alpheios-lexicon-client": "github:alpheios-project/lexicon-client",
     "alpheios-morph-client": "github:alpheios-project/morph-client",
     "alpheios-node-build": "github:alpheios-project/node-build",
@@ -28,9 +28,12 @@
     "fs": "0.0.1-security",
     "mkdirp": "*",
     "moment": "*",
-    "papaparse": "*",
+    "papaparse": "^4.6.1",
     "path": "^0.12.7",
-    "webpack": "^4.16.5",
-    "webpack-cli": "*"
+    "webpack": "^4.22.0",
+    "webpack-cli": "^3.1.2"
+  },
+  "dependencies": {
+    "pkg": "^4.3.4"
   }
 }
