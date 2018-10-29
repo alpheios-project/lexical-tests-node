@@ -33,7 +33,7 @@ class CheckTable {
       checkpoint = Date.now()
       time = checkpoint - start
       this.formatMorphData(dataItem, rowData)
-      let status = dataItem.homonym && dataItem.homonym.morphClient ? true :false
+      let status = dataItem.morphClient ? true :false
       this.logOutput(dataItem,"morphClient",status,time,this.logOnlyFailures)
     } else {
       let formLexeme = new models.Lexeme(new models.Lemma(dataItem.targetWord, dataItem.languageID), [])
@@ -110,18 +110,20 @@ class CheckTable {
 
   initLexemes(dataItem, rowData) {
     rowData.lexemes = []
-    dataItem.homonym.lexemes.forEach(lexeme => {
-      let lexemeData = { lemmaWord: lexeme.lemma.word, morphData: {} }
-      lexemeData.morphData.principalParts = lexeme.lemma.principalParts.join('; ')
-      for (let feature in lexeme.lemma.features) {
-        lexemeData.morphData[feature] = lexeme.lemma.features[feature].value
-      }
+    if (dataItem.homonym) {
+      dataItem.homonym.lexemes.forEach(lexeme => {
+        let lexemeData = { lemmaWord: lexeme.lemma.word, morphData: {} }
+        lexemeData.morphData.principalParts = lexeme.lemma.principalParts.join('; ')
+        for (let feature in lexeme.lemma.features) {
+          lexemeData.morphData[feature] = lexeme.lemma.features[feature].value
+        }
 
-      if (lexeme.meaning.shortDefs.length > 0) {
-        lexemeData.morphShortDefs = lexeme.meaning.shortDefs.map(def => def.text)
-      }
-      rowData.lexemes.push(lexemeData)
-    })
+        if (lexeme.meaning.shortDefs.length > 0) {
+          lexemeData.morphShortDefs = lexeme.meaning.shortDefs.map(def => def.text)
+        }
+        rowData.lexemes.push(lexemeData)
+      })
+    }
   }
 
   formatShortDefsData (dataItem, rowData) {
